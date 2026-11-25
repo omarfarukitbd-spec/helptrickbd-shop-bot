@@ -239,12 +239,12 @@ STRINGS = {
             "• 10B — {price_10b_usdt} USDT\n\n"
             "Change a price with:\n"
             "`/setprice 1B 120` — sets the 1B BDT price to ৳120\n"
-            "`/setprice 5B 450 4` — sets 5B to ৳450 and $4 USDT"
+            "`/setprice 5B 200 4` — sets 5B to ৳200 and $4 USDT"
         ),
         "setprice_usage": (
             "Usage:\n"
             "`/setprice 1B 120` — set the 1B Bangladesh price to ৳120\n"
-            "`/setprice 5B 450 4` — set 5B to ৳450 and $4 USDT\n"
+            "`/setprice 5B 200 4` — set 5B to ৳200 and $4 USDT\n"
             "Package must be 1B, 5B or 10B. See current prices with /prices."
         ),
         "setprice_ok": (
@@ -254,7 +254,7 @@ STRINGS = {
         ),
         "setprice_bad": (
             "⚠️ That did not work. Check the format:\n"
-            "`/setprice 1B 120` or `/setprice 5B 450 4`\n"
+            "`/setprice 1B 120` or `/setprice 5B 200 4`\n"
             "Amounts must be positive numbers."
         ),
     },
@@ -448,12 +448,12 @@ STRINGS = {
             "• 10B — {price_10b_usdt} USDT\n\n"
             "দাম বদলাতে লিখুন:\n"
             "`/setprice 1B 120` — 1B-এর দাম ৳১২০ হবে\n"
-            "`/setprice 5B 450 4` — 5B হবে ৳৪৫০ আর $4 USDT"
+            "`/setprice 5B 200 4` — 5B হবে ৳৪৫০ আর $4 USDT"
         ),
         "setprice_usage": (
             "ব্যবহার:\n"
             "`/setprice 1B 120` — 1B-এর বাংলাদেশি দাম ৳১২০ হবে\n"
-            "`/setprice 5B 450 4` — 5B হবে ৳৪৫০ আর $4 USDT\n"
+            "`/setprice 5B 200 4` — 5B হবে ৳৪৫০ আর $4 USDT\n"
             "প্যাকেজ 1B, 5B বা 10B হতে হবে। বর্তমান দাম দেখতে /prices লিখুন।"
         ),
         "setprice_ok": (
@@ -463,7 +463,7 @@ STRINGS = {
         ),
         "setprice_bad": (
             "⚠️ হয়নি। ঠিকভাবে লিখুন:\n"
-            "`/setprice 1B 120` বা `/setprice 5B 450 4`\n"
+            "`/setprice 1B 120` বা `/setprice 5B 200 4`\n"
             "দাম অবশ্যই ধনাত্মক সংখ্যা হতে হবে।"
         ),
     },

@@ -12,7 +12,7 @@ tokens through the KeyCraft Reseller API.
   **🌍 Global** (entire UI in English; payment: Binance Pay only).
   Each user's choice is saved; `/language` (or the 🌐 button) switches it.
 - **Packages:** 1B / 5B / 10B tokens. Prices are env vars —
-  BDT defaults 100 / 450 / 800, USDT defaults 1 / 4 / 7.
+  BDT defaults 40 / 200 / 400, USDT defaults 1 / 4 / 7.
 - **Semi-auto payment:** customer pays, sends TrxID + invite code,
   order is saved as PENDING, admin gets it with **Approve / Reject**
   buttons. On Approve the bot buys the tokens and polls delivery until
@@ -28,7 +28,7 @@ tokens through the KeyCraft Reseller API.
   `/status` (stock per supplier), `/orders` (pending orders with
   Approve / Reject buttons), `/prices` (current package prices),
   `/setprice` (change a price from Telegram, e.g. `/setprice 1B 120`
-  or `/setprice 5B 450 4` for BDT + USDT — takes effect immediately
+  or `/setprice 5B 200 4` for BDT + USDT — takes effect immediately
   for new orders and survives restarts, no FadeHost visit needed).
 - **Safety checks:** before accepting an order the bot checks live stock
   and balance, and refuses politely on OUT_OF_STOCK, MAINTENANCE, or
@@ -103,7 +103,7 @@ cp .env.example .env
 | `BKASH_NUMBER` | Your bKash Send Money number (e.g. `01XXXXXXXXX`) |
 | `NAGAD_NUMBER` | Your Nagad Send Money number |
 | `BINANCE_PAY_ID` | Your Binance Pay ID (USDT) |
-| `PRICE_1B` / `PRICE_5B` / `PRICE_10B` | Bangladesh prices in BDT (default 100 / 450 / 800) |
+| `PRICE_1B` / `PRICE_5B` / `PRICE_10B` | Bangladesh prices in BDT (default 40 / 200 / 400) |
 | `PRICE_1B_USDT` / `PRICE_5B_USDT` / `PRICE_10B_USDT` | Global prices in USDT (default 1 / 4 / 7) |
 | `DB_PATH` | SQLite file (default `orders.db`) |
 | `POLL_INTERVAL_SEC` / `POLL_MAX_ATTEMPTS` | Delivery polling (default 15s × 120 = 30 min) |
