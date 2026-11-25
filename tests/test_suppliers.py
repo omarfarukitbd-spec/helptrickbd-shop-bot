@@ -98,6 +98,58 @@ class KeyCraftTest(unittest.IsolatedAsyncioTestCase):
         await supplier.close()
 
 
+def make_live_transport():
+    """A fake KeyCraft server returning the EXACT live JSON shapes,
+    verified 2026-11-25 via the real API (see normalize_status docstring).
+    Regression test: the live /reseller/status says "AVAILABLE", not
+    "IN_STOCK" — the router must still treat the pool as available.
+    """
+    def handler(request: httpx.Request) -> httpx.Response:
+        path = request.url.path
+        if path.endswith("/reseller/status"):
+            return httpx.Response(200, json={
+                "service": "MuseAI Token Boost",
+                "maintenance": False,
+                "maintenance_message": None,
+                "in_stock": True,
+                "stock_status": "AVAILABLE",
+                "price_per_b": 0.06,
+                "min_tokens_b": 1,
+                "max_tokens_b": 30,
+                "max_bulk_codes": 10})
+        if path.endswith("/reseller/balance"):
+            return httpx.Response(200, json={
+                "reseller_id": "efffd4d6-935b-40df-94bb-98aa283ee80e",
+                "name": "Md", "balance": 2.0, "currency": "USD",
+                "price_per_b": 0.06, "total_spent": 0.0,
+                "total_tokens_b": 0, "is_active": True})
+        return httpx.Response(404, json={"error": "not found"})
+    return httpx.MockTransport(handler)
+
+
+class LiveResponseTest(unittest.IsolatedAsyncioTestCase):
+    async def test_live_available_shape_is_in_stock(self):
+        supplier = KeyCraftSupplier(
+            api_key="test-key", transport=make_live_transport())
+        status = await supplier.check_stock()
+        self.assertEqual(status["stock"], "IN_STOCK")
+        self.assertFalse(status["maintenance"])
+        balance = await supplier.get_balance()
+        self.assertEqual(balance["balance_usd"], 2.0)
+        self.assertEqual(balance["rate_per_1b"], 0.06)
+        await supplier.close()
+
+    async def test_live_shape_makes_packages_available(self):
+        supplier = KeyCraftSupplier(
+            api_key="test-key", transport=make_live_transport())
+        router = SupplierRouter([supplier])
+        for tokens_b in (1, 5, 10, 30):
+            ok, reason = await router.check_availability(tokens_b)
+            self.assertTrue(ok, f"{tokens_b}B should be available")
+            self.assertIsNone(reason)
+        await router.close()
+
+
 class RouterTest(unittest.IsolatedAsyncioTestCase):
     async def test_picks_cheapest(self):
         cheap_calls, expensive_calls = [], []

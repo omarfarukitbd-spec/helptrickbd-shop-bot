@@ -41,13 +41,26 @@ def _pick(data: dict, *names, default=None):
 
 
 def normalize_status(data: dict) -> dict:
+    """Live /reseller/status response, verified 2026-11-25 against the real API:
+    {"service": ..., "maintenance": false, "in_stock": true,
+     "stock_status": "AVAILABLE", "price_per_b": 0.06, ...}.
+    Note the live field is "AVAILABLE", not "IN_STOCK" — map it, or the
+    router treats every package as unavailable.
+    """
     stock = str(
         _pick(data, "stock", "stock_status", "status", default="UNKNOWN")
     ).upper()
+    if data.get("in_stock") is True or stock == "AVAILABLE":
+        stock = "IN_STOCK"
+    elif stock in {"UNAVAILABLE", "OUT"}:
+        stock = "OUT_OF_STOCK"
     maintenance = bool(
         _pick(data, "maintenance", "maintenance_mode", "in_maintenance",
               default=False)
     )
+    if stock == "MAINTENANCE":
+        maintenance = True
+        stock = "OUT_OF_STOCK"
     return {"stock": stock, "maintenance": maintenance, "raw": data}
 
 
@@ -58,6 +71,7 @@ def normalize_balance(data: dict) -> dict:
     )
     rate = _pick(
         data, "rate_per_1b", "rate", "unit_price", "price_per_1b",
+        "price_per_b",
         default=DEFAULT_RATE_PER_1B,
     )
     lifetime = _pick(
