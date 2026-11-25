@@ -187,7 +187,7 @@ class PriceOverrideTest(unittest.TestCase):
     def test_set_price_and_overrides(self):
         from config import Settings
         settings = Settings()
-        self.assertEqual(settings.price_1b, 40)
+        self.assertEqual(settings.price_1b, 30)
         self.assertTrue(settings.set_price(1, 120, "BDT"))
         self.assertEqual(settings.price_1b, 120)
         self.assertEqual(settings.price_for(1, "bd"), (120, "BDT"))
@@ -210,7 +210,7 @@ class PriceOverrideTest(unittest.TestCase):
             self.assertEqual(settings.price_1b, 120)
             self.assertEqual(settings.price_5b_usdt, 5)
             self.assertEqual(settings.price_1b_usdt, 1)  # bad value ignored
-            self.assertEqual(settings.price_5b, 200)  # untouched stays default
+            self.assertEqual(settings.price_5b, 150)  # untouched stays default
 
 
 if __name__ == "__main__":

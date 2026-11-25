@@ -38,9 +38,9 @@ class Settings:
 
         # --- Package prices ---
         # Bangladesh pays in BDT (bKash / Nagad / Binance Pay).
-        self.price_1b: int = _int_env("PRICE_1B", 40)
-        self.price_5b: int = _int_env("PRICE_5B", 200)
-        self.price_10b: int = _int_env("PRICE_10B", 400)
+        self.price_1b: int = _int_env("PRICE_1B", 30)
+        self.price_5b: int = _int_env("PRICE_5B", 150)
+        self.price_10b: int = _int_env("PRICE_10B", 300)
         # Global users pay in USDT (Binance Pay only). Defaults are the
         # USDT equivalents of the BDT prices above.
         self.price_1b_usdt: int = _int_env("PRICE_1B_USDT", 1)

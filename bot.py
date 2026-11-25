@@ -20,7 +20,7 @@ Flow (admin, ADMIN_TELEGRAM_ID):
   /orders   -> list pending orders (with Approve / Reject buttons)
   /prices   -> show current package prices (BDT + USDT)
   /setprice -> change a package price, e.g. /setprice 1B 120
-               or /setprice 5B 200 4 (BDT + USDT). Saved in the
+               or /setprice 5B 150 4 (BDT + USDT). Saved in the
                database, takes effect immediately, survives restarts.
 
 Suppliers are pluggable (see suppliers/): the bot only talks to the
