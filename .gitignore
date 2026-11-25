@@ -1,0 +1,8 @@
+# Secrets and local runtime files — never commit these.
+.env
+*.db
+__pycache__/
+.venv/
+venv/
+*.log
+.DS_Store
