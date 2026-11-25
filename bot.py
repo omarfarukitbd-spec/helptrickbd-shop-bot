@@ -2,7 +2,7 @@
 
 Flow (customer):
   /start -> pick region (🇧🇩 বাংলাদেশ = Bangla UI, 🌍 Global = English UI)
-        -> pick a package (1B / 5B / 10B)
+        -> pick a package (1B / 5B / 10B / 30B)
         -> pick a payment method (BD: bKash / Nagad / Binance Pay;
                                   Global: Binance Pay only)
         -> pay, then send TrxID, then send the Muse invite code
@@ -619,9 +619,11 @@ async def prices_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             price_1b=s.price_1b,
             price_5b=s.price_5b,
             price_10b=s.price_10b,
+            price_30b=s.price_30b,
             price_1b_usdt=s.price_1b_usdt,
             price_5b_usdt=s.price_5b_usdt,
             price_10b_usdt=s.price_10b_usdt,
+            price_30b_usdt=s.price_30b_usdt,
         ),
         parse_mode="Markdown",
     )
@@ -644,7 +646,7 @@ async def setprice_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -
         )
         return
     package = args[0].upper().rstrip("B")
-    if package not in ("1", "5", "10"):
+    if package not in ("1", "5", "10", "30"):
         await update.message.reply_text(
             t(lang, "setprice_bad"), parse_mode="Markdown"
         )

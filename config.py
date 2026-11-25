@@ -41,11 +41,14 @@ class Settings:
         self.price_1b: int = _int_env("PRICE_1B", 30)
         self.price_5b: int = _int_env("PRICE_5B", 150)
         self.price_10b: int = _int_env("PRICE_10B", 300)
+        # 30B is the bulk package: 30 x 30 BDT = 900.
+        self.price_30b: int = _int_env("PRICE_30B", 900)
         # Global users pay in USDT (Binance Pay only). Defaults are the
         # USDT equivalents of the BDT prices above.
         self.price_1b_usdt: int = _int_env("PRICE_1B_USDT", 1)
         self.price_5b_usdt: int = _int_env("PRICE_5B_USDT", 4)
         self.price_10b_usdt: int = _int_env("PRICE_10B_USDT", 7)
+        self.price_30b_usdt: int = _int_env("PRICE_30B_USDT", 21)
 
         # --- Storage / delivery polling ---
         self.db_path: str = os.getenv("DB_PATH", "orders.db")
@@ -58,14 +61,16 @@ class Settings:
         (1, "BDT"): "PRICE_1B",
         (5, "BDT"): "PRICE_5B",
         (10, "BDT"): "PRICE_10B",
+        (30, "BDT"): "PRICE_30B",
         (1, "USDT"): "PRICE_1B_USDT",
         (5, "USDT"): "PRICE_5B_USDT",
         (10, "USDT"): "PRICE_10B_USDT",
+        (30, "USDT"): "PRICE_30B_USDT",
     }
 
     def set_price(self, tokens_b: int, amount: int, currency: str) -> bool:
         """Set one package price in memory. Returns False on bad input."""
-        if tokens_b not in (1, 5, 10) or currency not in ("BDT", "USDT"):
+        if tokens_b not in (1, 5, 10, 30) or currency not in ("BDT", "USDT"):
             return False
         if amount <= 0:
             return False
@@ -73,9 +78,11 @@ class Settings:
             (1, "BDT"): "price_1b",
             (5, "BDT"): "price_5b",
             (10, "BDT"): "price_10b",
+            (30, "BDT"): "price_30b",
             (1, "USDT"): "price_1b_usdt",
             (5, "USDT"): "price_5b_usdt",
             (10, "USDT"): "price_10b_usdt",
+            (30, "USDT"): "price_30b_usdt",
         }[(tokens_b, currency)]
         setattr(self, attr, amount)
         return True
@@ -102,6 +109,7 @@ class Settings:
             (1, self.price_1b, "BDT"),
             (5, self.price_5b, "BDT"),
             (10, self.price_10b, "BDT"),
+            (30, self.price_30b, "BDT"),
         ]
 
     def packages_for_region(self, region: str) -> list[tuple[int, int, str]]:
@@ -112,6 +120,7 @@ class Settings:
             (1, self.price_1b_usdt, "USDT"),
             (5, self.price_5b_usdt, "USDT"),
             (10, self.price_10b_usdt, "USDT"),
+            (30, self.price_30b_usdt, "USDT"),
         ]
 
     def price_for(self, tokens_b: int, region: str = "bd") -> tuple[int, str] | None:

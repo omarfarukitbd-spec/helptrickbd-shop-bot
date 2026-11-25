@@ -191,6 +191,11 @@ class PriceOverrideTest(unittest.TestCase):
         self.assertTrue(settings.set_price(1, 120, "BDT"))
         self.assertEqual(settings.price_1b, 120)
         self.assertEqual(settings.price_for(1, "bd"), (120, "BDT"))
+        # The 30B bulk package works the same way.
+        self.assertTrue(settings.set_price(30, 900, "BDT"))
+        self.assertEqual(settings.price_30b, 900)
+        self.assertEqual(settings.price_for(30, "bd"), (900, "BDT"))
+        self.assertEqual(settings.price_for(30, "global"), (21, "USDT"))
         # Bad inputs are rejected and leave the price unchanged.
         self.assertFalse(settings.set_price(2, 120, "BDT"))
         self.assertFalse(settings.set_price(1, 0, "BDT"))
@@ -204,11 +209,13 @@ class PriceOverrideTest(unittest.TestCase):
             store = OrderStore(os.path.join(tmp, "test.db"))
             store.set_setting("PRICE_1B", "120")
             store.set_setting("PRICE_5B_USDT", "5")
+            store.set_setting("PRICE_30B", "900")
             store.set_setting("PRICE_1B_USDT", "not-a-number")
             settings = Settings()
             settings.apply_overrides(store.get_all_settings())
             self.assertEqual(settings.price_1b, 120)
             self.assertEqual(settings.price_5b_usdt, 5)
+            self.assertEqual(settings.price_30b, 900)
             self.assertEqual(settings.price_1b_usdt, 1)  # bad value ignored
             self.assertEqual(settings.price_5b, 150)  # untouched stays default
 

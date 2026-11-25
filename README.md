@@ -11,8 +11,8 @@ tokens through the KeyCraft Reseller API.
   (entire UI in Bangla; payments: bKash + Nagad + Binance Pay) and
   **🌍 Global** (entire UI in English; payment: Binance Pay only).
   Each user's choice is saved; `/language` (or the 🌐 button) switches it.
-- **Packages:** 1B / 5B / 10B tokens. Prices are env vars —
-  BDT defaults 30 / 150 / 300, USDT defaults 1 / 4 / 7.
+- **Packages:** 1B / 5B / 10B / 30B tokens. Prices are env vars —
+  BDT defaults 30 / 150 / 300 / 900, USDT defaults 1 / 4 / 7 / 21.
 - **Semi-auto payment:** customer pays, sends TrxID + invite code,
   order is saved as PENDING, admin gets it with **Approve / Reject**
   buttons. On Approve the bot buys the tokens and polls delivery until
@@ -103,7 +103,7 @@ cp .env.example .env
 | `BKASH_NUMBER` | Your bKash Send Money number (e.g. `01XXXXXXXXX`) |
 | `NAGAD_NUMBER` | Your Nagad Send Money number |
 | `BINANCE_PAY_ID` | Your Binance Pay ID (USDT) |
-| `PRICE_1B` / `PRICE_5B` / `PRICE_10B` | Bangladesh prices in BDT (default 30 / 150 / 300) |
+| `PRICE_1B` / `PRICE_5B` / `PRICE_10B` / `PRICE_30B` | Bangladesh prices in BDT (default 30 / 150 / 300 / 900) |
 | `PRICE_1B_USDT` / `PRICE_5B_USDT` / `PRICE_10B_USDT` | Global prices in USDT (default 1 / 4 / 7) |
 | `DB_PATH` | SQLite file (default `orders.db`) |
 | `POLL_INTERVAL_SEC` / `POLL_MAX_ATTEMPTS` | Delivery polling (default 15s × 120 = 30 min) |
